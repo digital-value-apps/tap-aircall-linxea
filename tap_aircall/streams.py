@@ -26,6 +26,12 @@ class CallsStream(AircallStream):
     primary_keys: t.ClassVar[list[str]] = ["id"]
     replication_key = "started_at"
     records_jsonpath = "$.calls[*]"
+
+    def get_url_params(self, context, next_page_token):
+        params = super().get_url_params(context, next_page_token)
+        params["fetch_call_timeline"] = "true"
+        return params
+
     schema = PropertiesList(
         Property("id", IntegerType),
         Property("direct_link", StringType),
