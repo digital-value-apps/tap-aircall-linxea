@@ -100,9 +100,9 @@ class CallsStream(AircallStream):
                     Property("title", StringType),
                     Property("key", StringType),
                     Property("branch", StringType),
-                    Property("created_at", StringType),
-                    Property("transition_started_at", StringType),
-                    Property("transition_ended_at", StringType),
+                    Property("created_at", IntegerType),
+                    Property("transition_started_at", IntegerType),
+                    Property("transition_ended_at", IntegerType),
                 )
             ),
         ),
