@@ -191,8 +191,8 @@ class ContactsStream(AircallStream):
         Property("information", StringType),
         Property("is_shared", BooleanType),
         # --- New fields below ---
-        Property("created_at", DateTimeType),
-        Property("updated_at", DateTimeType),
+        Property("created_at", IntegerType),
+        Property("updated_at", IntegerType),
         Property(
             "phone_numbers",
             ArrayType(
