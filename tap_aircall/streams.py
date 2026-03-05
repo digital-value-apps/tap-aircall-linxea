@@ -130,7 +130,7 @@ class UsersStream(AircallStream):
         Property("wrap_up_time", IntegerType),
         # --- New fields below ---
         Property("substatus", StringType),
-        Property("extension", IntegerType),
+        Property("extension", StringType),
         Property("default_number_id", IntegerType),
     ).to_dict()
 
