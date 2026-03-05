@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "ticketswap-tap-aircall"
-version = "0.0.1"
-description = "`tap-aircall` is a Singer tap for Aircall, built with the Meltano Singer SDK."
+name = "linxea-tap-aircall"
+version = "0.1.0"
+description = "`tap-aircall` is a Singer tap for Aircall, built with the Meltano Singer SDK. Forked from TicketSwap/tap-aircall with extended stream schemas."
 readme = "README.md"
-authors = ["Tobias Cadee <tobias.cadee@ticketswap.com>"]
+authors = ["Linxea"]
 keywords = [
     "ELT",
     "Aircall",
@@ -18,7 +18,7 @@ python = ">=3.8,<4"
 singer-sdk = { version="~=0.42.1" }
 fs-s3fs = { version = "~=1.1.1", optional = true }
 requests = "~=2.32.3"
-cached-property = "~=2" # Remove after Python 3.7 support is dropped
+cached-property = "~=2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.4.0"
@@ -33,13 +33,12 @@ warn_unused_configs = true
 
 [tool.ruff]
 ignore = [
-    "ANN101",  # missing-type-self
-    "ANN102",  # missing-type-cls
+    "ANN101",
+    "ANN102",
 ]
 select = ["ALL"]
 src = ["tap_aircall"]
 target-version = "py37"
-
 
 [tool.ruff.flake8-annotations]
 allow-star-arg-any = true
@@ -55,5 +54,4 @@ requires = ["poetry-core>=1.0.8"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-# CLI declaration
 tap-aircall = 'tap_aircall.tap:TapAircall.cli'

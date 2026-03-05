@@ -10,15 +10,13 @@ from urllib.parse import urlencode
 from datetime import datetime
 from urllib.parse import parse_qsl
 
-
 import requests
 from requests import Response
 from singer_sdk.authenticators import BasicAuthenticator
 from singer_sdk.helpers.jsonpath import extract_jsonpath
-from singer_sdk.pagination import BasePageNumberPaginator  # noqa: TCH002
+from singer_sdk.pagination import BasePageNumberPaginator
 from singer_sdk.streams import RESTStream
 from singer_sdk.pagination import BaseHATEOASPaginator
-
 
 if sys.version_info >= (3, 8):
     from functools import cached_property
@@ -43,13 +41,15 @@ class AircallStream(RESTStream):
         """Return the API URL root, configurable via tap settings."""
         return "https://api.aircall.io/v1"
 
-    records_jsonpath = "$[*]"  # Or override `parse_response`.
+    records_jsonpath = "$[*]"
 
     @property
     def authenticator(self):
         """Return the authenticator."""
         return BasicAuthenticator.create_for_stream(
-            self, username=self.config.get("api_key"), password=self.config.get("api_token")
+            self,
+            username=self.config.get("api_key"),
+            password=self.config.get("api_token"),
         )
 
     def get_url_params(self, context, next_page_token):
@@ -58,7 +58,11 @@ class AircallStream(RESTStream):
 
         if start_date:
             if type(start_date) == str:
-                start_date = int(datetime.timestamp(datetime.strptime(start_date, "%Y-%m-%dT%H:%M:%SZ")))
+                start_date = int(
+                    datetime.timestamp(
+                        datetime.strptime(start_date, "%Y-%m-%dT%H:%M:%SZ")
+                    )
+                )
             params.update({"from": start_date})
 
         if next_page_token:
@@ -68,13 +72,6 @@ class AircallStream(RESTStream):
 
     def get_new_paginator(self) -> BaseHATEOASPaginator:
         """Create a new pagination helper instance.
-
-        If the source API can make use of the `next_page_token_jsonpath`
-        attribute, or it contains a `X-Next-Page` header in the response
-        then you can remove this method.
-
-        If you need custom pagination that uses page numbers, "next" links, or
-        other approaches, please read the guide: https://sdk.meltano.com/en/v0.25.0/guides/pagination-classes.html.
 
         Returns:
             A pagination helper instance.
